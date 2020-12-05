@@ -5,7 +5,7 @@ metadata:
 data:
   application.properties: |
     # Configures the Qpid JMS properties.
-    quarkus.qpid-jms.url=amqps://amq-hdls-svc:5671?transport.trustStoreLocation=/certs/truststore.jks&transport.trustStorePassword=changeit
+    quarkus.qpid-jms.url=amqps://amq-hdls-svc:5671?transport.trustStoreLocation=${quarkus.kubernetes.mounts.certs.path}/truststore.jks&transport.trustStorePassword=changeit
     %rdev.quarkus.qpid-jms.url=amqp://amq-hdls-svc:5672
     %dev.quarkus.qpid-jms.url=amqp://localhost:5672
     quarkus.qpid-jms.username=quarkus
@@ -64,6 +64,7 @@ data:
     # Quarkus
     quarkus.container-image.builder=docker
     quarkus.container-image.image=quay.io/raffaelespazzoli/quarkus-amq:1.0
+    %native.quarkus.container-image.image=quay.io/raffaelespazzoli/quarkus-amq-native:1.0
     quarkus.container-image.registry=quay.io
     #quarkus.container-image.group=raffaelespazzoli 
     #quarkus.container-image.name=quarkus-amq 
@@ -72,8 +73,10 @@ data:
     #kube manifests
     quarkus.kubernetes.deployment-target=kubernetes
     quarkus.kubernetes.name=quarkus-amq
+    %native.quarkus.kubernetes.name=quarkus-amq-native
     quarkus.kubernetes.secret-volumes.certs.secret-name=amq-amqp-tls-secret
     quarkus.kubernetes.mounts.certs.path=/certs
     quarkus.kubernetes.config-map-volumes.config.config-map-name=application-properties-quarkus
     quarkus.kubernetes.mounts.config.path=/deployments/config
+    %native.quarkus.kubernetes.mounts.config.path=/config
  

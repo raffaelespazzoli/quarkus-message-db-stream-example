@@ -146,7 +146,21 @@ oc set env deployment/springboot-amq SPRING_CONFIG_LOCATION=/config/application-
 oc expose service springboot-amq --port 8080-tcp -n ${project}
 ```
 
-## Deploy the java-quarkus application
+## Work with the quarkus app locally (dev profile)
+
+```shell
+docker run -it --rm -p 8161:8161 -p 61616:61616 -p 5672:5672 -e ARTEMIS_USERNAME=quarkus -e ARTEMIS_PASSWORD=quarkus vromero/activemq-artemis:2.11.0-alpine
+mvn clean quarkus:dev
+```
+
+## Work with the quarkus app remotely (rdev profile)
+
+```shell
+odo push -f
+odo watch
+```
+
+## Deploy the java-quarkus application (production profile)
 
 ```shell
 ./mvnw clean package -Dquarkus.container-image.build=true -Dquarkus.container-image.push=true
@@ -155,10 +169,13 @@ oc apply -f ./target/kubernetes/kubernetes.yml -n ${project}
 oc expose service quarkus-amq --port http -n ${project}
 ```
 
-## Deploy the native quarkus application
+## Deploy the native-quarkus application (production profile)
 
 ```shell
-./mvnw package -Pnative -Dquarkus.native.container-runtime=podman
+./mvnw package -Pnative -Dquarkus.native.container-runtime=podman -Dquarkus.native.container-build=true -Dquarkus.container-image.build=true -Dquarkus.container-image.push=true -Dquarkus.profile=native
+oc apply -f ./environment-set-up/quarkus/application-properties.yaml -n ${project}
+oc apply -f ./target/kubernetes/kubernetes.yml -n ${project}
+oc expose service quarkus-amq-native --port http -n ${project}
 ```
 
 ## Original Quarkus Instructions
