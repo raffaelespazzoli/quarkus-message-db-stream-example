@@ -149,15 +149,17 @@ oc expose service springboot-amq --port 8080-tcp -n ${project}
 ## Deploy the java-quarkus application
 
 ```shell
-oc import-image ubi8/openjdk-11 --from=registry.access.redhat.com/ubi8/openjdk-11 --confirm -n ${project}
-oc new-app openjdk-11~https://github.com/raffaelespazzoli/amq-test --name quarkus-amq -n ${project} -l app=quarkus-amq
+./mvnw clean package -Dquarkus.container-image.build=true -Dquarkus.container-image.push=true
 oc apply -f ./environment-set-up/quarkus/application-properties.yaml -n ${project}
-oc set volume deployment/quarkus-amq --add --configmap-name=application-properties --mount-path=/deployments/config --name=config -t configmap -n ${project}
-oc set volume deployment/quarkus-amq --add --secret-name=amq-amqp-tls-secret --mount-path=/certs --name=certs -t secret -n ${project}
-oc expose service quarkus-amq --port 8080-tcp -n ${project}
+oc apply -f ./target/kubernetes/kubernetes.yml -n ${project}
+oc expose service quarkus-amq --port http -n ${project}
 ```
 
 ## Deploy the native quarkus application
+
+```shell
+./mvnw package -Pnative -Dquarkus.native.container-runtime=podman
+```
 
 ## Original Quarkus Instructions
 
