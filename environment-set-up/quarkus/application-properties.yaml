@@ -5,7 +5,7 @@ metadata:
 data:
   application.properties: |
     # Configures the Qpid JMS properties.
-    quarkus.qpid-jms.url=amqps://amq-hdls-svc:5671?transport.trustStoreLocation=${quarkus.kubernetes.mounts.certs.path}/truststore.jks&transport.trustStorePassword=changeit
+    quarkus.qpid-jms.url=amqps://amq-hdls-svc:5671?transport.trustStoreLocation=/certs/truststore.jks&transport.trustStorePassword=changeit
     %rdev.quarkus.qpid-jms.url=amqp://amq-hdls-svc:5672
     %dev.quarkus.qpid-jms.url=amqp://localhost:5672
     quarkus.qpid-jms.username=quarkus
@@ -59,7 +59,7 @@ data:
     app.queues.outbound=outbound.queue
     app.topics.inbound=inbound.topic
     app.topics.outbound=outbound.topic
-    app.certs.ca.crt=${quarkus.kubernetes.mounts.certs.path}/ca.crt
+    app.certs.ca.crt=/certs/ca.crt
 
     # Quarkus
     quarkus.container-image.builder=docker

@@ -178,6 +178,16 @@ oc apply -f ./target/kubernetes/kubernetes.yml -n ${project}
 oc expose service quarkus-amq-native --port http -n ${project}
 ```
 
+## Performance result
+
+Here are some stats:
+
+|            | boot time | memory consumption at rest | cpu consumption at rest |
+|----------|:-------------:|:------:|:------:|
+| spring boot | 8.5s     | 440MiB    | 1.5mc |
+| quarkus jvm | 1.1s     | 320MiB    | 0.5mc |
+| quarkus native | 100ms | 120MiB | 0.1mc |
+
 ## Original Quarkus Instructions
 
 ### quarkus-messaging-db-stream-example project
