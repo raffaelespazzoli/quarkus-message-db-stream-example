@@ -66,8 +66,8 @@ spec:
   usages:
     - server auth
   dnsNames:
-  - amq-wconsj-0-svc-rte-${namespace}.apps.${base_domain}
-  - amq-wconsj-0-svc-rte-${namespace}.apps.${base_domain}
+  - amq-wconsj-0-svc-rte-${project}.apps.${base_domain}
+  - amq-wconsj-0-svc-rte-${project}.apps.${base_domain}
   duration: 168h
   renewBefore: 1h
   issuerRef:

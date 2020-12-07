@@ -78,5 +78,5 @@ data:
     quarkus.kubernetes.mounts.certs.path=/certs
     quarkus.kubernetes.config-map-volumes.config.config-map-name=application-properties-quarkus
     quarkus.kubernetes.mounts.config.path=/deployments/config
-    %native.quarkus.kubernetes.mounts.config.path=/config
+    %native.quarkus.kubernetes.mounts.config.path=/work/config
  
