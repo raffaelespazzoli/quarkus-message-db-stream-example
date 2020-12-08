@@ -164,7 +164,8 @@ odo watch
 
 ```shell
 ./mvnw clean package -Dquarkus.container-image.build=true -Dquarkus.container-image.push=true
-oc apply -f ./environment-set-up/quarkus/application-properties.yaml -n ${project}
+#oc apply -f ./environment-set-up/quarkus/application-properties.yaml -n ${project}
+oc create configmap application-properties-quarkus --from-file=src/main/resources/application.properties --dry-run -o yaml -n ${project} | oc apply -f - -n ${project}
 oc apply -f ./target/kubernetes/kubernetes.yml -n ${project}
 oc expose service quarkus-amq --port http -n ${project}
 ```
@@ -173,7 +174,8 @@ oc expose service quarkus-amq --port http -n ${project}
 
 ```shell
 ./mvnw package -Pnative -Dquarkus.native.container-runtime=podman -Dquarkus.native.container-build=true -Dquarkus.container-image.build=true -Dquarkus.container-image.push=true -Dquarkus.profile=native
-oc apply -f ./environment-set-up/quarkus/application-properties.yaml -n ${project}
+#oc apply -f ./environment-set-up/quarkus/application-properties.yaml -n ${project}
+oc create configmap application-properties-quarkus --from-file=src/main/resources/application.properties --dry-run -o yaml -n ${project} | oc apply -f - -n ${project}
 oc apply -f ./target/kubernetes/kubernetes.yml -n ${project}
 oc expose service quarkus-amq-native --port http -n ${project}
 ```
