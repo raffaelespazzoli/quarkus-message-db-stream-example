@@ -32,7 +32,7 @@ commands:
   - id: dev-run
     exec:
       component: tools
-      commandLine: "mvn -Dmaven.repo.local=/home/user/.m2/repository quarkus:dev -Dquarkus.profile=rdev"
+      commandLine: "mvn -Dmaven.repo.local=/home/user/.m2/repository quarkus:dev -Dquarkus.profile=rdev -Dquarkus.http.host=0.0.0.0"
       hotReloadCapable: true
       group:
         kind: run
